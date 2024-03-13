@@ -11,10 +11,18 @@
                     1231212312312123123121231231212312312123123121231231212312312123123121231231212312312123123121231231212312312123123121231231212312312123123121231231212312312123123121231231212312312123123121231231212312312123123121231231212312312123
                 </div>
 
-                <div><BarInfoBlock :title="'評論'" :content="'評論'" :barId="1"></BarInfoBlock></div>
-                <div><BarInfoBlock :title="'地點'" :content=barBlock1.content></BarInfoBlock></div>
-                <div><BarInfoBlock :title="barBlock1.title" :content=barBlock1.content></BarInfoBlock></div>
-                <div><BarInfoBlock :title="barBlock1.title" :content=barBlock1.content></BarInfoBlock></div>
+                <div>
+                    <BarInfoBlock :title="'評論'" :content="'評論'" :barId="1"></BarInfoBlock>
+                </div>
+                <div>
+                    <BarInfoBlock :title="'地點'" :content="'地點'"></BarInfoBlock>
+                </div>
+                <div>
+                    <BarInfoBlock :title="barBlock1.title" :content=barBlock1.content></BarInfoBlock>
+                </div>
+                <div>
+                    <BarInfoBlock :title="barBlock1.title" :content=barBlock1.content></BarInfoBlock>
+                </div>
                 <div class="line"></div>
 
             </div>
@@ -41,8 +49,8 @@ const closesBarInfoDiv = () => {
 }
 
 const barBlock1 = reactive({
-    title:"介紹",
-    content:"<div>dfjhgnkho31242142fhnienwfl2hoirijh23nlfojihgfeoiw</div><div>dfjhgnkho31242142fhnienwfl2hoirijh23nlfojihgfeoiw</div><div>dfjhgnkho31242142fhnienwfl2hoirijh23nlfojihgfeoiw</div><div>dfjhgnkho31242142fhnienwfl2hoirijh23nlfojihgfeoiw</div>"
+    title: "介紹",
+    content: "<div>dfjhgnkho31242142fhnienwfl2hoirijh23nlfojihgfeoiw</div><div>dfjhgnkho31242142fhnienwfl2hoirijh23nlfojihgfeoiw</div><div>dfjhgnkho31242142fhnienwfl2hoirijh23nlfojihgfeoiw</div><div>dfjhgnkho31242142fhnienwfl2hoirijh23nlfojihgfeoiw</div>"
 })
 </script>
 <style></style>
@@ -150,4 +158,5 @@ const barBlock1 = reactive({
 #scoreDiv>img {
     height: 20px;
     width: 20px;
-}</style>
+}
+</style>

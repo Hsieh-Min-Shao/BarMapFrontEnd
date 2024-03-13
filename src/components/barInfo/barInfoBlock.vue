@@ -14,6 +14,9 @@
                 <div v-if="props.title === '評論' && props.content === '評論'">
                     <BarComment :bar-id="props.barId"></BarComment>
                 </div>
+                <div v-if="props.title === '地點' && props.content === '地點'">
+                    <BarLocation :bar-id="props.barId"></BarLocation>
+                </div>
                 <div v-else>
                     <div v-html="props.content"></div>
                 </div>
@@ -24,7 +27,8 @@
 
 <script setup>
 import { ref, reactive, watch, nextTick } from 'vue'
-import BarComment from './barComment.vue';
+import BarComment from './barInfoBlockContents/barComment.vue';
+import BarLocation from './barInfoBlockContents/barLocation.vue';
 const props = defineProps({
     title: String,
     content: String,
@@ -144,4 +148,5 @@ watch(() => props.content, () => {
 
 .thisContent {
     margin: 10px;
-}</style>
+}
+</style>
