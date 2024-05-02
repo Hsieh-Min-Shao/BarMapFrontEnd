@@ -15,7 +15,7 @@
                     <BarInfoBlock :title="'評論'" :content="'評論'" :barId="1"></BarInfoBlock>
                 </div>
                 <div>
-                    <BarInfoBlock :title="'地點'" :content="'地點'"></BarInfoBlock>
+                    <BarInfoBlock :title="'地點'" :content="'地點'" :barId="1"></BarInfoBlock>
                 </div>
                 <div>
                     <BarInfoBlock :title="barBlock1.title" :content=barBlock1.content></BarInfoBlock>

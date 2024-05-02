@@ -14,7 +14,7 @@
                 <div v-if="props.title === '評論' && props.content === '評論'">
                     <BarComment :bar-id="props.barId"></BarComment>
                 </div>
-                <div v-if="props.title === '地點' && props.content === '地點'">
+                <div v-else-if="props.title === '地點' && props.content === '地點'">
                     <BarLocation :bar-id="props.barId"></BarLocation>
                 </div>
                 <div v-else>

@@ -73,7 +73,7 @@ function handleSearch() {
 </script>
 <style></style>
 <style scoped>
-#sideBarDiv{
+#sideBarDiv {
     height: calc(90% - 90px);
 }
 
@@ -110,11 +110,24 @@ function handleSearch() {
 }
 
 #filterDiv {
-    height: calc( 100% - 80px );
+    height: calc(100% - 80px);
     margin-bottom: 15px;
     width: 100%;
     overflow: scroll;
 }
+
+#filterDiv::-webkit-scrollbar {
+    display: none;
+    /* 對於Chrome、Safari和Opera */
+}
+
+#filterDiv {
+    -ms-overflow-style: none;
+    /* 對於IE和Edge */
+    scrollbar-width: none;
+    /* 對於Firefox */
+}
+
 
 .titleText {
     font-size: 20px;
