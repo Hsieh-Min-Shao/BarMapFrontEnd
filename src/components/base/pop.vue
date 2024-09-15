@@ -2,12 +2,12 @@
     <Teleport to="body" v-if="isPop">
         <div class="popDiv">
             <div class="popBox" :style="boxStyle">
-                <div class="popBoxMsg flexAllCenter">{{ props.data.msg }} {{ props.data.commemtId }}</div>
+                <div class="popBoxMsg flexAllCenter">{{ data.msg }} {{ data.commemtId }}</div>
                 <div class="popBoxBtn flexAllCenter">
                     <div class="confirmBtnDiv flexAllCenter" @click="colsePopBox">
                         <div class="decideBtn confirmBtn flexAllCenter">確認</div>
                     </div>
-                    <div v-if="props.data.needDecide" class="cancelBtnDiv flexAllCenter" @click="colsePopBox">
+                    <div v-if="data.needDecide" class="cancelBtnDiv flexAllCenter" @click="colsePopBox">
                         <div class="decideBtn cancelBtn flexAllCenter">取消</div>
                     </div>
                 </div>
@@ -17,46 +17,39 @@
 </template>
 
 <script setup>
-import { ref, reactive, watch } from 'vue'
+import { ref, reactive, watch } from 'vue';
+
 const isPop = ref(false);
-const props = defineProps(
-    {
-        isPopFlag: Number,
-        data: {
-            commemtId:Number,
-            height: Number,
-            width: Number,
-            msg: String,
-            needDecide: Boolean,
-            apiUrl: String,
-            apiData: Object
-        }
-    });
 
-/*
-
-彈窗選填文字匡 needReason，可已寫好後送出時塞在apiData.reason裏面
-
-*/
+const props = defineProps({
+    isPopFlag: Number,
+    data: {
+        commemtId: Number,
+        height: Number,
+        width: Number,
+        msg: String,
+        needDecide: Boolean,
+        apiUrl: String,
+        apiData: Object
+    }
+});
 
 watch(() => props.isPopFlag, () => {
     isPop.value = true;
-    // console.log(props.isPopFlag);
-})
+    boxStyle.height = props.data.height + "px";
+    boxStyle.width = props.data.width + "px";
+});
 
 const colsePopBox = () => {
-    isPop.value=false;
-}
-
-const emits = defineEmits(['search']);
+    isPop.value = false;
+};
 
 const boxStyle = reactive({
     height: props.data.height + "px",
     width: props.data.width + "px"
 });
-
 </script>
-<style></style>
+
 <style scoped>
 .popDiv {
     position: fixed;
@@ -91,27 +84,27 @@ const boxStyle = reactive({
 .confirmBtnDiv {
     width: 50%;
 }
-.cancelBtnDiv{
+.cancelBtnDiv {
     width: 50%;
 }
-.decideBtn{
+.decideBtn {
     height: 40px;
     width: 80px;
     border-radius: 4px;
     font-weight: 700;
     cursor: pointer;
 }
-.confirmBtn{
+.confirmBtn {
     color: white;
     background-color: var(--gray);
 }
-.confirmBtn:hover{
+.confirmBtn:hover {
     background-color: var(--grayClick);
 }
-.cancelBtn{
+.cancelBtn {
     background-color: var(--lightGray);
 }
-.cancelBtn:hover{
+.cancelBtn:hover {
     background-color: var(--lightGrayClick);
 }
 </style>

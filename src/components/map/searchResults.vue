@@ -9,10 +9,13 @@
             <div> {{ searchInfo.minPirce }}</div>
             <div> {{ searchInfo.maxPrice }}</div>
         </div>
-        <div class="oneBarDiv">
+        <div v-for="bar in barList" :key="bar.barId" class="oneBarDiv">
             <div class="barName">名字</div>
             <div class="barScore flexAllCenter">2.5 &nbsp; <img src="/pic/searchResults/star.png" alt=""></div>
             <div class="barLocation">city site road city site road city site road city site road city site road city site road city site road city site road city site road </div>
+        
+        </div>
+        <div >
         </div>
 
     </div>
@@ -35,6 +38,22 @@ const props = defineProps({
     },
     updateFlag: Number
 });
+
+// 每則店家範例矩陣
+const barList = reactive([
+    {
+        barId: 1,
+        barScore: 3,
+        barName: "名字1",
+        barLocation: "店員臉太臭店員臉太臭店員臉太臭..."
+    },
+    {
+        barId: 2,
+        barScore: 2.5,
+        barName: "名字2",
+        barLocation: "city site road city site road city site road city site road city site road city site road city site road city site road city site road"
+    }
+]);
 
 // 直接根據 updateFlag 的變化來觸發更新
 watch(() => props.updateFlag, () => {
@@ -62,6 +81,8 @@ watch(() => props.updateFlag, () => {
     /* 初始位置向左偏移 */
     transition: opacity 0.3s, transform 0.3s;
     /* 添加過渡效果 */
+    overflow: scroll;
+
 }
 
 .displayNone {
@@ -107,6 +128,7 @@ watch(() => props.updateFlag, () => {
     padding: 8px 10px;
     box-sizing: border-box;
     overflow: scroll;
+    margin-bottom: 15px;
 }
 .barName{
     font-size: 20px;

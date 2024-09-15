@@ -5,9 +5,12 @@
             <div id="myCommemtBlank"></div>
             <div id="myCommemtSubmit" class="flexAllCenter">Send</div>
         </div>
+        <!-- 檢舉彈窗 -->
         <Pop :data="reportBox" :isPopFlag="isReportBoxPopFlag"></Pop>
+        <!-- 刪除彈窗 -->
+        <Pop :data="binBox" :isPopFlag="isBinBoxPopFlag"></Pop>
         <div class="line"></div>
-        <div v-for="otherComment in otherCommentList" class="otherComment flexWrap">
+        <div v-for="otherComment in otherCommentList" :key="otherComment.commemtId" class="otherComment flexWrap">
             <div class="otherCommentImg"><img :src="otherComment.imgSrc" alt=""></div>
             <div class="otherCommentMessage">
                 <div class="flexWrap">
@@ -15,8 +18,9 @@
                     <div @click="reportBoxPopUp(otherComment.commemtId)"
                         class="otherCommentMessageIcon flexHorizontalCenter"><img src="/pic/barInfo/warning.png" alt="">
                     </div>
-                    <div v-if="otherComment.userId === userId" class="otherCommentMessageIcon flexHorizontalCenter"><img
-                            src="/pic/barInfo/bin.png" alt=""></div>
+                    <div v-if="otherComment.userId === userId" @click="binBoxPopUp(otherComment.commemtId)" class="otherCommentMessageIcon flexHorizontalCenter">
+                        <img src="/pic/barInfo/bin.png" alt="">
+                    </div>
                 </div>
                 <div class="otherCommentMessageText">{{ otherComment.message }}</div>
             </div>
@@ -25,33 +29,34 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
-import Pop from "../../base/pop.vue"
+import { ref, reactive } from 'vue';
+import Pop from "../../base/pop.vue";
+
 const props = defineProps({
     barId: Number
 });
 
 const myCommemtText = ref("");
 
-//每則評論範例矩陣
+// 每則評論範例矩陣
 const otherCommentList = reactive([
     {
         commemtId: 1,
         userId: 123,
         imgSrc: "/pic/base/logo.png",
         name: "匿名使用者",
-        message: "店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭"
+        message: "店員臉太臭店員臉太臭店員臉太臭..."
     },
     {
         commemtId: 2,
         userId: 12,
         imgSrc: "/pic/base/logo.png",
         name: "匿名使用者",
-        message: "店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭店員臉太臭"
+        message: "店員臉太臭店員臉太臭店員臉太臭..."
     }
 ]);
 
-//彈窗 -> 檢舉用格式
+// 彈窗 -> 檢舉用格式
 const reportBox = reactive({
     commemtId: 0,
     height: 250,
@@ -64,19 +69,39 @@ const reportBox = reactive({
     }
 });
 
-//用來識別可以刪除本身留言的useId
-const userId = 123
+// 彈窗 -> 刪除用格式
+const binBox = reactive({
+    commemtId: 0,
+    height: 250,
+    width: 500,
+    msg: "確定要刪除該則訊息？",
+    apiUrl: "",
+    needDecide: true,
+    apiData: {
+        id: 2313213
+    }
+});
 
-//單純計數用來彈出警告視窗
-const isReportBoxPopFlag = ref(0)
+// 用來識別可以刪除本身留言的useId
+const userId = 123;
 
-//彈窗 -> 觸發檢舉彈窗
+// 單純計數用來彈出警告視窗
+const isReportBoxPopFlag = ref(0);  // 控制檢舉彈窗
+const isBinBoxPopFlag = ref(0);     // 控制刪除彈窗
+
+// 彈窗 -> 觸發檢舉彈窗
 const reportBoxPopUp = (commemtId) => {
     isReportBoxPopFlag.value++;
-    reportBox.commemtId = commemtId
-}
+    reportBox.commemtId = commemtId;
+};
+
+// 彈窗 -> 觸發刪除彈窗
+const binBoxPopUp = (commemtId) => {
+    isBinBoxPopFlag.value++;
+    binBox.commemtId = commemtId;
+};
 </script>
-<style></style>
+
 <style scoped>
 #myCommemt {
     height: 30px;
@@ -101,8 +126,6 @@ const reportBoxPopUp = (commemtId) => {
     outline: none;
 }
 
-
-
 #myCommemtSubmit {
     width: 60px;
     border-radius: 10px;
@@ -125,7 +148,6 @@ const reportBoxPopUp = (commemtId) => {
     width: 70px;
     height: 70px;
     overflow: hidden;
-    /* 確保圖片超出部分不會顯示 */
     border-radius: 50%;
     box-sizing: border-box;
     padding: 3px;
@@ -134,11 +156,8 @@ const reportBoxPopUp = (commemtId) => {
 
 .otherCommentImg>img {
     width: 100%;
-    /* 使圖片寬度等於容器的寬度 */
     height: 100%;
-    /* 使圖片高度等於容器的高度 */
     object-fit: cover;
-    /* 保持圖片的比例，並確保圖片覆蓋整個容器 */
 }
 
 .otherCommentMessage {
