@@ -4,12 +4,13 @@
             <p id="searchResultsText" class="flexVerticalCenter">搜尋結果</p>
             <p class="closeBtn flexAllCenter" @click="closesearchResult">×</p>
             <div>暫時放搜尋在這，之後會串API</div>
+            <div>篩選結果</div>
             <div>{{ searchInfo.searchText }} </div>
             <div> {{ searchInfo.selectedTags }}</div>
             <div> {{ searchInfo.minPirce }}</div>
             <div> {{ searchInfo.maxPrice }}</div>
         </div>
-        <div v-for="bar in barList" :key="bar.barId" class="oneBarDiv">
+        <div v-for="bar in barList" :key="bar.barId" @click="handleSearchResult(bar.barId)" class="oneBarDiv">
             <div class="barName">名字</div>
             <div class="barScore flexAllCenter">2.5 &nbsp; <img src="/pic/searchResults/star.png" alt=""></div>
             <div class="barLocation">city site road city site road city site road city site road city site road city site road city site road city site road city site road </div>
@@ -60,6 +61,15 @@ watch(() => props.updateFlag, () => {
     // 這裡可以執行更新搜尋結果的邏輯
     isSearch.value = true;
 });
+
+const emits = defineEmits(['searchResult']);
+function handleSearchResult(barId) {
+    const searchResultInfo = {
+        barId: barId,
+    };
+    emits('searchResult', searchResultInfo);
+    isSearch.value = false;
+}
 </script>
 <style>
 #searchResultsDiv {
@@ -129,6 +139,7 @@ watch(() => props.updateFlag, () => {
     box-sizing: border-box;
     overflow: scroll;
     margin-bottom: 15px;
+    cursor: pointer;
 }
 .barName{
     font-size: 20px;

@@ -49,11 +49,11 @@ function toggleRotation() {
         // 如果當前是要恢復原狀，我們需要將`vertical`類重新加上
         // 因為動畫完成後會停留在-90度，所以需要將它手動重設回0度
         turnOff.value = true; // 重置為垂直狀態
-        contentStyle.value = { maxHeight: '0', transition: 'max-height 0.5s ease' };
+        contentStyle.value = { maxHeight: '0', transition: 'max-height 0.3s ease' };
     } else {
         turnOff.value = false; // 移除垂直狀態，以開始旋轉
         const height = content.value.scrollHeight + 'px';
-        contentStyle.value = { maxHeight: height, transition: 'max-height 0.5s ease' };
+        contentStyle.value = { maxHeight: height, transition: 'max-height 0.3s ease' };
     }
 }
 

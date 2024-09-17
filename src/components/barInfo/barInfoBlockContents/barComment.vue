@@ -1,7 +1,8 @@
 <template>
     <div id="barCommentDiv">
         <div id="myCommemt" class="flexWrap">
-            <textarea v-model="myCommemtText" name="" id="myCommemtText" cols="30" rows="10" placeholder="撰寫評論"></textarea>
+            <textarea v-model="myCommemtText" name="" id="myCommemtText" cols="30" rows="10"
+                placeholder="撰寫評論"></textarea>
             <div id="myCommemtBlank"></div>
             <div id="myCommemtSubmit" class="flexAllCenter">Send</div>
         </div>
@@ -16,9 +17,10 @@
                 <div class="flexWrap">
                     <div class="otherCommentMessageName">{{ otherComment.name }}</div>
                     <div @click="reportBoxPopUp(otherComment.commemtId)"
-                        class="otherCommentMessageIcon flexHorizontalCenter"><img src="/pic/barInfo/warning.png" alt="">
+                        class="otherCommentMessageIcon flexVerticalCenter"><img src="/pic/barInfo/warning.png" alt="">
                     </div>
-                    <div v-if="otherComment.userId === userId" @click="binBoxPopUp(otherComment.commemtId)" class="otherCommentMessageIcon flexHorizontalCenter">
+                    <div v-if="otherComment.userId === userId" @click="binBoxPopUp(otherComment.commemtId)"
+                        class="otherCommentMessageIcon flexVerticalCenter">
                         <img src="/pic/barInfo/bin.png" alt="">
                     </div>
                 </div>
@@ -64,6 +66,7 @@ const reportBox = reactive({
     msg: "確定要檢舉該則訊息？",
     apiUrl: "",
     needDecide: true,
+    decideSusMsg: "檢舉",
     apiData: {
         id: 2313213
     }
@@ -77,6 +80,7 @@ const binBox = reactive({
     msg: "確定要刪除該則訊息？",
     apiUrl: "",
     needDecide: true,
+    decideSusMsg: "刪除",
     apiData: {
         id: 2313213
     }
@@ -145,8 +149,8 @@ const binBoxPopUp = (commemtId) => {
 }
 
 .otherCommentImg {
-    width: 70px;
-    height: 70px;
+    width: 50px;
+    height: 50px;
     overflow: hidden;
     border-radius: 50%;
     box-sizing: border-box;
@@ -161,7 +165,7 @@ const binBoxPopUp = (commemtId) => {
 }
 
 .otherCommentMessage {
-    width: calc(100% - 70px);
+    width: calc(100% - 50px);
     padding-left: 10px;
     box-sizing: border-box;
 }

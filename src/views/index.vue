@@ -3,12 +3,13 @@
         <div id="sideBar">
             <img id="logo" src="/pic/base/logo.png" alt="logo">
             <SiderBar @search="onSearch"></SiderBar>
-            <div>user預留地</div>
+            <userBlock></userBlock>
         </div>
         <div id="map">
             <Map></Map>
-            <SearchResults :searchInfo="currentSearchInfo" :updateFlag="updateFlag"></SearchResults>
-            <BarInfo></BarInfo>
+            <SearchResults :searchInfo="currentSearchInfo" :updateFlag="updateSearchInfoFlag"
+                @searchResult="onSearchResult"></SearchResults>
+            <BarInfo :searchInfo="currentSearchResultInfo" :updateFlag="updateSearchResultInfoFlag"></BarInfo>
         </div>
     </div>
 </template>
@@ -16,18 +17,27 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import Map from "../components/map/map.vue"
-import SearchResults from "../components/map/searchResults.vue";
-import SiderBar from "../components/map/sideBar.vue"
+import SearchResults from "../components/sideBar/searchResults.vue";
+import SiderBar from "../components/sideBar/sideBar.vue"
+import userBlock from "../components/sideBar/userBlock.vue"
 import BarInfo from '../components/barInfo/barInfo.vue';
 
 const currentSearchInfo = ref({});
-const updateFlag = ref(0);
+const currentSearchResultInfo = ref({});
+const updateSearchInfoFlag = ref(0);
+const updateSearchResultInfoFlag = ref(0);
 
 
 function onSearch(searchInfo) {
     currentSearchInfo.value = searchInfo;
-    updateFlag.value++; // 增加标志以触发更新
+    updateSearchInfoFlag.value++; // 增加标志以触发更新
 }
+function onSearchResult(searchResultInfo) {
+    currentSearchResultInfo.value = searchResultInfo;
+    updateSearchResultInfoFlag.value++; // 增加标志以触发更新
+}
+
+
 
 </script>
 <style>
@@ -39,8 +49,8 @@ function onSearch(searchInfo) {
     --lightGrayClick: rgb(226, 226, 226);
     --gray: rgb(127, 127, 127);
     --grayClick: rgb(107, 107, 107);
-    --btnGray:rgb(92,92,92);
-    --btnGrayClick:rgb(67, 67, 67);
+    --btnGray: rgb(92, 92, 92);
+    --btnGrayClick: rgb(67, 67, 67);
     --darkBlue: rgb(19, 58, 78);
 }
 
@@ -74,7 +84,7 @@ body {
     width: 100%;
     height: 1px;
     border-top: solid var(--gray) 1px;
-    margin :5px  0px;
+    margin: 5px 0px;
 }
 
 /* 通用設定 結束 */
@@ -97,6 +107,8 @@ body {
     height: 100%;
     box-sizing: border-box;
     z-index: 10;
+    position: relative;
+
 }
 
 #map {

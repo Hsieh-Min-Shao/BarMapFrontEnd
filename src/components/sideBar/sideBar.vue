@@ -74,7 +74,7 @@ function handleSearch() {
 <style></style>
 <style scoped>
 #sideBarDiv {
-    height: calc(90% - 90px);
+    height: calc(90% - 80px);
 }
 
 /* #BarMapText {

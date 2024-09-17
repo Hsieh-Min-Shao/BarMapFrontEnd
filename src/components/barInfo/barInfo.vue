@@ -1,14 +1,16 @@
 <template>
     <div>
-        <div id="barInfoDiv" class="flexWrap" :class="{ displayNone: !openBarInfoDiv }">
+        <!-- 使用 CSS 控制顯示和動畫 -->
+        <div id="barInfoDiv" class="flexWrap" :class="{ fadeIn: openBarInfoDiv, fadeOut: !openBarInfoDiv }">
             <p class="closeBtn flexAllCenter" @click="closesBarInfoDiv">✕</p>
             <div id="barInfo" :class="{ width100: !havePic }">
-                <div id="barName">{{ barName }}</div>
+                <div id="barName">{{ props.searchInfo.barId }}</div>
                 <div id="scoreDiv" class="flexWrap flexVerticalCenter">
                     <p>{{ score }}</p> <img :src="starImg" alt="">
                 </div>
                 <div id="barInfoIntroduce">
-                    1231212312312123123121231231212312312123123121231231212312312123123121231231212312312123123121231231212312312123123121231231212312312123123121231231212312312123123121231231212312312123123121231231212312312123123121231231212312312123
+                    這裡是介紹內容...
+                    營業時間，日期
                 </div>
 
                 <div>
@@ -24,37 +26,75 @@
                     <BarInfoBlock :title="barBlock1.title" :content=barBlock1.content></BarInfoBlock>
                 </div>
                 <div class="line"></div>
-
             </div>
             <div id="barImg" :class="{ width0: !havePic }">
                 <img :src="barImage" alt="">
             </div>
-
         </div>
     </div>
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue';
-import BarInfoBlock from './barInfoBlock.vue'
-const openBarInfoDiv = ref(true);
+import { ref, reactive, watch, defineProps } from 'vue';
+import BarInfoBlock from './barInfoBlock.vue';
+
+const props = defineProps({
+    searchInfo: {
+        barId: Number,
+    },
+    updateFlag: Number
+});
+
+const openBarInfoDiv = ref(false);
 const barName = ref("title");
 const barImage = ref("/pic/test/barImg.png");
 const havePic = ref(true);
 const score = ref(3.5);
-const starImg = ref("/pic/barInfo/star.png")
+const starImg = ref("/pic/barInfo/star.png");
 
 const closesBarInfoDiv = () => {
     openBarInfoDiv.value = false;
-}
+};
+
+// 監聽 updateFlag 變化，打開信息顯示
+watch(() => props.updateFlag, () => {
+    openBarInfoDiv.value = true;
+});
 
 const barBlock1 = reactive({
     title: "介紹",
-    content: "<div>dfjhgnkho31242142fhnienwfl2hoirijh23nlfojihgfeoiw</div><div>dfjhgnkho31242142fhnienwfl2hoirijh23nlfojihgfeoiw</div><div>dfjhgnkho31242142fhnienwfl2hoirijh23nlfojihgfeoiw</div><div>dfjhgnkho31242142fhnienwfl2hoirijh23nlfojihgfeoiw</div>"
-})
+    content: "<div>介紹內容...</div>"
+});
 </script>
-<style></style>
+
 <style scoped>
+/* 定義淡入淡出的動畫 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.fadeIn {
+  animation: fadeIn 0.25s forwards; /* 淡入效果 */
+}
+
+.fadeOut {
+  animation: fadeOut 0.25s forwards; /* 淡出效果 */
+}
+
 #barInfoDiv {
     background-color: rgb(255, 255, 255, 0.9);
     /* background-color: rgb(242, 243, 245); */
@@ -66,9 +106,8 @@ const barBlock1 = reactive({
     top: 3%;
     left: 5%;
     border-radius: 30px;
+    border: 3px solid whitesmoke;
 }
-
-
 
 #barImg {
     overflow: hidden;
@@ -113,7 +152,7 @@ const barBlock1 = reactive({
 }
 
 .closeBtn:hover {
-    transform: none;
+    /* transform: none; */
     background-color: var(--gray);
     color: whitesmoke;
     /* border:2px solid white; */
