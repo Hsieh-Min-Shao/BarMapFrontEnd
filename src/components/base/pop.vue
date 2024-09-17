@@ -8,10 +8,10 @@
                 <div class="popBox" :style="boxStyle">
                     <div class="popBoxMsg flexAllCenter">{{ data.msg }} {{ data.commemtId }}</div>
                     <div class="popBoxBtn flexAllCenter">
-                        <div class="confirmBtnDiv flexAllCenter" @click="colsePopBox">
+                        <div class="confirmBtnDiv flexAllCenter" @click="confirmActuve">
                             <div class="decideBtn confirmBtn flexAllCenter">確認</div>
                         </div>
-                        <div v-if="data.needDecide" class="cancelBtnDiv flexAllCenter" @click="colsePopBox">
+                        <div v-if="props.data.needDecide" class="cancelBtnDiv flexAllCenter" @click="colsePopBox">
                             <div class="decideBtn cancelBtn flexAllCenter">取消</div>
                         </div>
                     </div>
@@ -35,7 +35,7 @@ const props = defineProps({
         width: Number,
         msg: String,
         needDecide: Boolean,
-        decideSusMsg:String,
+        decideSusMsg: String,
         apiUrl: String,
         apiData: Object
     }
@@ -49,7 +49,14 @@ watch(() => props.isPopFlag, () => {
 });
 
 //動作
-const confirmActuve = () => {}
+const confirmActuve = () => {
+    isPop.value = false;
+    if (props.data.needDecide) {
+        setTimeout(() => { // 使用 setTimeout 確保動畫完成後顯示
+            alert(props.data.decideSusMsg + '成功'); // 彈出 alert
+        }, 100);        
+    }
+}
 
 // 關閉彈窗
 const colsePopBox = () => {
