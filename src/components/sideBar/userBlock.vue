@@ -5,6 +5,7 @@
             <div class="loginBtn flexAllCenter"><img src="/pic/userCenter/google.png" alt=""></div>
             <div class="loginBtn flexAllCenter"><img src="/pic/userCenter/line.png" alt=""></div>
         </div>
+        <!-- 這裡可以用成組建去拆分成登入和註冊 -->
         <div class="loginBlock">
             <div class="login">
                 <div id="loginOrRegister" class="flexWrap">
