@@ -5,6 +5,7 @@
             <SiderBar @search="onSearch"></SiderBar>
             <userBlock></userBlock>
         </div>
+        <div class="width20px"></div>
         <div id="map">
             <Map></Map>
             <SearchResults :searchInfo="currentSearchInfo" :updateFlag="updateSearchInfoFlag"
@@ -102,8 +103,8 @@ body {
 }
 
 #sideBar {
-    padding: 0px px;
-    width: 300px;
+    padding: 0px 0px;
+    width: calc(300px - 20px);
     height: 100%;
     box-sizing: border-box;
     z-index: 10;
@@ -111,8 +112,27 @@ body {
 
 }
 
+.width20px {
+    width: 20px;
+}
+
+
 #map {
     width: calc(100% - 300px);
     position: relative;
 }
+
+@media (max-width:600px) {
+    #sideBar {
+display: none;    }
+
+    #map {
+        width: 100%;
+    }
+
+    .width20px {
+        width: 0px;
+    }
+}
+
 </style>

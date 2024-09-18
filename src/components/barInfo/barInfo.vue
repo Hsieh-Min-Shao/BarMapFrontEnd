@@ -89,10 +89,12 @@ const barBlock1 = reactive({
 
 .fadeIn {
   animation: fadeIn 0.25s forwards; /* 淡入效果 */
+  z-index: 2;
 }
 
 .fadeOut {
   animation: fadeOut 0.25s forwards; /* 淡出效果 */
+  z-index: 0;
 }
 
 #barInfoDiv {
@@ -101,7 +103,6 @@ const barBlock1 = reactive({
     /* background-color: var(--lightGray); */
     height: 94%;
     width: 90%;
-    z-index: 2;
     position: absolute;
     top: 3%;
     left: 5%;

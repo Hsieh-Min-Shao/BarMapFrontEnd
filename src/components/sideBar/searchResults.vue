@@ -10,20 +10,21 @@
             <div> {{ searchInfo.minPirce }}</div>
             <div> {{ searchInfo.maxPrice }}</div>
         </div>
-        <div v-for="bar in barList" :key="bar.barId" @click="handleSearchResult(bar.barId)" class="oneBarDiv">
+        <div v-for="bar in barList" :key="bar.barId" @click="handleSearchResult(bar.barId)" class="oneBarDiv" :class="{ cursorPointer: isSearch }">
             <div class="barName">名字</div>
             <div class="barScore flexAllCenter">2.5 &nbsp; <img src="/pic/searchResults/star.png" alt=""></div>
-            <div class="barLocation">city site road city site road city site road city site road city site road city site road city site road city site road city site road </div>
-        
+            <div class="barLocation">city site road city site road city site road city site road city site road city
+                site road city site road city site road city site road </div>
+
         </div>
-        <div >
+        <div>
         </div>
 
     </div>
 </template>
 
 <script setup>
-import { ref, reactive, watch ,defineProps} from 'vue';
+import { ref, reactive, watch, defineProps } from 'vue';
 
 const isSearch = ref(false)
 const closesearchResult = () => {
@@ -64,11 +65,13 @@ watch(() => props.updateFlag, () => {
 
 const emits = defineEmits(['searchResult']);
 function handleSearchResult(barId) {
-    const searchResultInfo = {
-        barId: barId,
-    };
-    emits('searchResult', searchResultInfo);
-    isSearch.value = false;
+    if (isSearch.value) {
+        const searchResultInfo = {
+            barId: barId,
+        };
+        emits('searchResult', searchResultInfo);
+        isSearch.value = false;
+    }
 }
 </script>
 <style>
@@ -105,6 +108,10 @@ function handleSearchResult(barId) {
     /* 回到原位 */
 }
 
+.cursorPointer{
+    cursor: pointer !important;
+}
+
 #searchResultsTitle {
     width: 100%;
     margin-bottom: 20px;
@@ -130,8 +137,9 @@ function handleSearchResult(barId) {
     transform: scale(1.5);
     /* 輕微放大 */
 }
-.oneBarDiv{
-    background-color: rgb(217, 217, 217,0.5);
+
+.oneBarDiv {
+    background-color: rgb(217, 217, 217, 0.5);
     height: 130px;
     width: 100%;
     border-radius: 10px;
@@ -139,13 +147,15 @@ function handleSearchResult(barId) {
     box-sizing: border-box;
     overflow: scroll;
     margin-bottom: 15px;
-    cursor: pointer;
+    cursor: default;
 }
-.barName{
+
+.barName {
     font-size: 20px;
     margin-bottom: 5px;
 }
-.barScore{
+
+.barScore {
     background: white;
     width: fit-content;
     padding: 2px 10px;
@@ -153,7 +163,8 @@ function handleSearchResult(barId) {
     border-radius: 50px;
     margin-bottom: 5px;
 }
-.barLocation{
+
+.barLocation {
     font-weight: 100;
 }
 </style>

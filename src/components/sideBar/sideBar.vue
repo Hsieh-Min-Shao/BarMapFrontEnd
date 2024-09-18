@@ -1,5 +1,5 @@
 <template>
-    <div id="sideBarDiv">
+    <div id="sideBarDiv" @click.stop>
         <div id="searchDiv" class="flexWrap flexAllCenter">
             <input type="text" v-model="searchText">
             <img src="/pic/sideBar/blackSearch.svg" @click="handleSearch">
@@ -74,7 +74,7 @@ function handleSearch() {
 <style></style>
 <style scoped>
 #sideBarDiv {
-    height: calc(90% - 80px);
+    height: calc(100% - 120px);
 }
 
 /* #BarMapText {
