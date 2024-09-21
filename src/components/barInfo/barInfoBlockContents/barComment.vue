@@ -139,7 +139,7 @@ const binBoxPopUp = (commemtId) => {
     cursor: pointer;
 }
 
-#myCommemtSubmit:hover {
+#myCommemtSubmit:hover,#myCommemtSubmit:active {
     background-color: var(--btnGrayClick);
 }
 

@@ -148,7 +148,7 @@ const boxStyle = reactive({
     background-color: var(--gray);
 }
 
-.confirmBtn:hover {
+.confirmBtn:hover,.confirmBtn:active {
     background-color: var(--grayClick);
 }
 
@@ -156,7 +156,7 @@ const boxStyle = reactive({
     background-color: var(--lightGray);
 }
 
-.cancelBtn:hover {
+.cancelBtn:hover,.cancelBtn:active {
     background-color: var(--lightGrayClick);
 }
 </style>

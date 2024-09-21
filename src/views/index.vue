@@ -53,6 +53,7 @@ function onSearchResult(searchResultInfo) {
     --btnGray: rgb(92, 92, 92);
     --btnGrayClick: rgb(67, 67, 67);
     --darkBlue: rgb(19, 58, 78);
+    --inputColor: rgb(112, 112, 112);
 }
 
 .flexWrap {
@@ -94,7 +95,8 @@ body {
 #indexDiv {
     /* width: 100vh; */
     height: 95vh;
-    padding: 20px;
+    padding: 15px;
+    box-sizing: border-box;
 }
 
 #logo {
@@ -124,7 +126,8 @@ body {
 
 @media (max-width:600px) {
     #sideBar {
-display: none;    }
+        display: none;
+    }
 
     #map {
         width: 100%;
@@ -134,5 +137,4 @@ display: none;    }
         width: 0px;
     }
 }
-
 </style>

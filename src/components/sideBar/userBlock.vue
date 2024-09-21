@@ -6,22 +6,12 @@
             <div class="loginBtn flexAllCenter"><img src="/pic/userCenter/line.png" alt=""></div>
         </div>
         <!-- 這裡可以用成組建去拆分成登入和註冊 -->
-        <div class="loginBlock">
-            <div class="login">
-                <div id="loginOrRegister" class="flexWrap">
-                    <p>登入</p>
-                    <p>註冊</p>
-                </div>
-                <div id="accBlock" class="flexWrap flexAllCenter">
-                    <p>信箱:</p><input type="text" v-model="mailText">
-                </div>
-            </div>
-        </div>
+        <login></login>
     </div>
 </template>
 <script setup>
 import { ref } from 'vue'
-const mailText = ref('');
+import login from "./login.vue"
 
 const changeHeight = ref(false);
 
@@ -46,6 +36,7 @@ const toggleHeight = () => {
     transition: height 0.5s ease;
     /* 使用 height 過渡效果 */
     overflow: hidden;
+    /* overflow-y: scroll; */
     /* 隱藏內容 */
     padding: 5px;
     box-sizing: border-box;
@@ -72,7 +63,7 @@ const toggleHeight = () => {
     cursor: pointer;
 }
 
-.loginBtn:hover {
+.loginBtn:hover,.loginBtn:active {
     background-color: var(--lightGray);
     border: none
 }
@@ -80,41 +71,5 @@ const toggleHeight = () => {
 .loginBtn>img {
     height: 100%;
 }
-/* 一般登入區塊 */
-.loginBlock {
-    height: calc(100% - 40px);
-    /* background-color: lightblue; */
-    overflow: scroll;
-    padding: 5px;
-    box-sizing: border-box;
-}
 
-/* 登入註冊選擇 */
-
-#loginOrRegister{
-    justify-content: space-evenly;
-}
-
-/* 信箱輸入區 */
-#accBlock>p {
-    font-size: 20px;
-    height: 25px;
-}
-
-input {
-    font-size: 20px;
-    height: 25px;
-    width: 70%;
-    border: none;
-    border-bottom: 2px solid rgb(112, 112, 112);
-    /* border-radius: 3px; */
-    box-sizing: border-box;
-
-}
-
-input:focus {
-    outline: none;
-    /* border: 2px solid black; */
-
-}
 </style>

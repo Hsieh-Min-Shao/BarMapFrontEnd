@@ -8,7 +8,7 @@
             <div class="titleText">價錢區間：{{ priceRangeMin }} - {{ priceRangeMax }}</div>
             <div id="priceRangeInputDiv" class="flexWrap flexVerticalCenter inputCss">
                 <input type="text" v-model="priceRangeMin">
-                <div>&nbsp; - &nbsp;</div>
+                <div>&nbsp; 至 &nbsp;</div>
                 <input type="text" v-model="priceRangeMax">
             </div>
             <div class="titleText">標籤</div>
@@ -91,8 +91,9 @@ function handleSearch() {
 #searchDiv input {
     font-size: 25px;
     height: 25px;
-    width: 70%;
-    border: 2px solid rgb(112, 112, 112);
+    width: 80%;
+    border: 2px solid var(--inputColor);
+    box-sizing: border-box;
     border-radius: 4px;
 
 }
@@ -100,11 +101,10 @@ function handleSearch() {
 #searchDiv input:focus {
     outline: none;
     border: 2px solid black;
-
 }
 
 #searchDiv img {
-    width: 25%;
+    width: 20%;
     height: 25px;
     cursor: pointer;
 }
