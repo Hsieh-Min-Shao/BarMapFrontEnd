@@ -3,7 +3,7 @@
         <div id="sideBar">
             <img id="logo" src="/pic/base/logo.png" alt="logo">
             <SiderBar @search="onSearch"></SiderBar>
-            <userBlock></userBlock>
+            <userBlock  @searchResult="onSearchResult"></userBlock>
         </div>
         <div class="width20px"></div>
         <div id="map">
@@ -54,18 +54,20 @@ function onSearchResult(searchResultInfo) {
     --btnGrayClick: rgb(67, 67, 67);
     --darkBlue: rgb(19, 58, 78);
     --inputColor: rgb(112, 112, 112);
+    --removeRed: rgb(255, 142, 142);
+    --removeRedClick: rgb(179, 27, 27);
 }
 
 .flexWrap {
     display: flex;
     flex-wrap: wrap;
 }
-
+/*水平置中 */
 .flexHorizontalCenter {
     display: flex;
     justify-content: center;
 }
-
+/* 垂直置中 */
 .flexVerticalCenter {
     display: flex;
     align-items: center;

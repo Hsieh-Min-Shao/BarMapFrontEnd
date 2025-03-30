@@ -77,7 +77,7 @@ const barList = reactive([
             Wed: "09:00-18:00",
             Thu: "09:00-18:00",
             Fri: "09:00-18:00",
-            Sat: "10:00-16:00"
+            Sat: "10:00-20:00"
         },
         todayHours: ""
     }
@@ -95,7 +95,7 @@ function handleSearchResult(barId) {
             barId: barId,
         };
         emits('searchResult', searchResultInfo);
-        isSearch.value = false;
+        // isSearch.value = false;
     }
 }
 

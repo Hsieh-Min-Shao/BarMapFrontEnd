@@ -1,8 +1,13 @@
 <template>
     <RouterView></RouterView>
+    <Notification></Notification>
+    <GlobalPop ref="popRef" />
 
 </template>
 <script setup>
+import GlobalPop from './components/base/pop.vue'
+import Notification from '@/components/base/notification.vue'
+import { ref } from 'vue'
 import { onMounted, onUnmounted } from 'vue'
 import { useWindowStore } from './stores/windowSize'
 
@@ -21,6 +26,16 @@ onMounted(() => {
 
 onUnmounted(() => {
     window.removeEventListener('resize', updateSize)
+})
+
+
+const popRef = ref()
+
+// 全域註冊方法
+onMounted(() => {
+  window.showPop = (options) => {
+    popRef.value?.show(options)
+  }
 })
 </script>
 <style scoped></style>

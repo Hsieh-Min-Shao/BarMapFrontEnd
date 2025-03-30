@@ -1,24 +1,60 @@
 <template>
     <div class="userBlock" :class="{ expanded: changeHeight }">
-        <div class="userControllerLogin flexWrap">
-            <div class="loginBtn flexAllCenter" @click="toggleHeight"><img src="/pic/userCenter/user.png" alt=""></div>
-            <div class="loginBtn flexAllCenter"><img src="/pic/userCenter/google.png" alt=""></div>
-            <div class="loginBtn flexAllCenter"><img src="/pic/userCenter/line.png" alt=""></div>
+        <div v-if="!isLogin"><!--這裡是登入前-->
+            <div class="userCenterBlock flexWrap">
+                <div class="loginBtn flexAllCenter" @click="toggleHeight"><img src="/pic/userCenter/user.png" alt="">
+                </div>
+                <div class="loginBtn flexAllCenter"><img src="/pic/userCenter/google.png" alt=""></div>
+                <div class="loginBtn flexAllCenter"><img src="/pic/userCenter/line.png" alt=""></div>
+            </div>
+            <!-- 這裡可以用成組建去拆分成登入和註冊 -->
+            <login></login>
         </div>
-        <!-- 這裡可以用成組建去拆分成登入和註冊 -->
-        <login></login>
+        <div v-else>
+            <div class="userCenterBlock flexWrap flexVerticalCenter">
+                <div class="userImg"><img src="/pic/userCenter/user.png" alt=""></div>
+                <div class="userName ">使用者名稱</div>
+                <div class="loginBtn userBtn flexAllCenter" @click="toggleHeight">
+                    <Icon icon="material-symbols:bookmark-outline" class="iconBtn" />
+                </div>
+                <div class="loginBtn userBtn flexAllCenter">
+                    <Icon icon="material-symbols:settings-outline" class="iconBtn" />
+                </div>
+            </div>
+            <favorite :userId="userData.userId" @searchResult="onSearchResult"></favorite>
+        </div><!--這裡是登入後-->
     </div>
 </template>
 <script setup>
 import { ref } from 'vue'
 import login from "./login.vue"
+import favorite from './favorite.vue';
+import { Icon } from '@iconify/vue';
+
+
+// 判斷是否登入
+const isLogin = ref(true);
 
 const changeHeight = ref(false);
 
 // 切換高度狀態
 const toggleHeight = () => {
     changeHeight.value = !changeHeight.value;
+
 };
+
+const userData = ref({
+    userName: "使用者名稱",
+    userImg: "/pic/userCenter/user.png",
+    userId: 12
+});
+
+const emit = defineEmits(['searchResult']);
+
+const onSearchResult = (searchResultInfo) => {
+  emit('searchResult', searchResultInfo);  
+};
+
 </script>
 
 <style scoped>
@@ -40,18 +76,27 @@ const toggleHeight = () => {
     /* 隱藏內容 */
     padding: 5px;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
 }
 
 /* 展開時高度變為90% */
 .expanded {
-    height: calc(100% - 140px);
+    height: calc(100% - 140px) !important;
     /* 當展開時，變為父容器的90%高度 */
 }
 
-.userControllerLogin {
+.userBlock>div {
+    height: 100%;
+    /* 讓子元素填滿父元素 */
+}
+
+.userCenterBlock {
     height: 40px;
+    /* border: 1px solid var(--lightGrayClick); */
     justify-content: space-between;
 }
+
 /* 登入方式按鈕 */
 .loginBtn {
     height: 30px;
@@ -63,7 +108,8 @@ const toggleHeight = () => {
     cursor: pointer;
 }
 
-.loginBtn:hover,.loginBtn:active {
+.loginBtn:hover,
+.loginBtn:active {
     background-color: var(--lightGray);
     border: none
 }
@@ -72,4 +118,38 @@ const toggleHeight = () => {
     height: 100%;
 }
 
+.userImg {
+    height: 30px;
+    /* width: 30px; */
+    box-sizing: border-box;
+    border-radius: 10%;
+    overflow: hidden;
+    border: 2px solid var(--lightGrayClick);
+}
+
+.userImg>img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.userName {
+    width: calc(100% - 120px);
+}
+
+.userBtn {
+    width: 30px;
+}
+
+.userBtn:hover .iconBtn {
+    transform: scale(1.2);
+
+}
+
+.iconBtn {
+    width: 24px;
+    height: 24px;
+    color: gray;
+    transition: transform 0.2s, color 0.2s;
+}
 </style>

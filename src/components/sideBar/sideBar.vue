@@ -52,7 +52,7 @@ function toggleSelection(tag) {
         selectedTags.add(tag);
         // console.log(tag); // 讀取被選中的標籤數據
     }
-    console.log(Array.from(selectedTags))
+    // console.log(Array.from(selectedTags))
 }
 
 function isSelected(tag) {

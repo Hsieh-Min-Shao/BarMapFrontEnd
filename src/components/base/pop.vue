@@ -1,162 +1,87 @@
 <template>
-    <!-- Teleport 將彈窗放置到 body 並顯示 -->
-    <Teleport to="body" v-if="isPop">
-        <!-- 使用 transition 來控制進入和離開 -->
-        <div class="popDiv" @click.self="colsePopBox">
-            <transition name="expand-fade" appear>
-                <!-- 彈窗內容 -->
-                <div class="popBox" :style="boxStyle">
-                    <div class="popBoxMsg flexAllCenter">{{ data.msg }} {{ data.commemtId }}</div>
-                    <div class="popBoxBtn flexAllCenter">
-                        <div class="confirmBtnDiv flexAllCenter" @click="confirmActuve">
-                            <div class="decideBtn confirmBtn flexAllCenter">確認</div>
-                        </div>
-                        <div v-if="props.data.needDecide" class="cancelBtnDiv flexAllCenter" @click="colsePopBox">
-                            <div class="decideBtn cancelBtn flexAllCenter">取消</div>
-                        </div>
-                    </div>
-                </div>
-            </transition>
-        </div>
+    <Teleport to="body">
+      <div v-if="visible" class="popDiv" @click.self="close">
+        <transition name="expand-fade" appear>
+          <div class="popBox" :style="{ width, height }">
+            <component
+              :is="contentComponent"
+              v-bind="contentProps"
+              @close="close"
+              @confirm="confirm"
+            />
+          </div>
+        </transition>
+      </div>
     </Teleport>
-</template>
-
-<script setup>
-import { ref, reactive, watch } from 'vue';
-
-// 是否顯示彈窗
-const isPop = ref(false);
-
-const props = defineProps({
-    isPopFlag: Number,
-    data: {
-        commemtId: Number,
-        height: Number,
-        width: Number,
-        msg: String,
-        needDecide: Boolean,
-        decideSusMsg: String,
-        apiUrl: String,
-        apiData: Object
-    }
-});
-
-// 監聽 isPopFlag 的變化來控制彈窗
-watch(() => props.isPopFlag, () => {
-    isPop.value = true;
-    boxStyle.height = props.data.height + "px";
-    boxStyle.width = props.data.width + "px";
-});
-
-//動作
-const confirmActuve = () => {
-    isPop.value = false;
-    if (props.data.needDecide) {
-        setTimeout(() => { // 使用 setTimeout 確保動畫完成後顯示
-            alert(props.data.decideSusMsg + '成功'); // 彈出 alert
-        }, 100);        
-    }
-}
-
-// 關閉彈窗
-const colsePopBox = () => {
-    isPop.value = false;
-};
-
-// 彈窗樣式
-const boxStyle = reactive({
-    height: props.data.height + "px",
-    width: props.data.width + "px"
-});
-</script>
-
-<style scoped>
-/* 彈窗背景 */
-.popDiv {
+  </template>
+  
+  <script setup>
+  import { ref, shallowRef } from 'vue';
+  
+  const visible = ref(false);
+  const height = ref('150px');
+  const width = ref('300px');
+  const contentComponent = shallowRef(null);
+  const contentProps = ref({});
+  let confirmCallback = null;
+  
+  const confirm = () => {
+    visible.value = false;
+    if (confirmCallback) confirmCallback();
+  };
+  
+  const close = () => {
+    visible.value = false;
+  };
+  
+  const show = ({ component, props = {}, onConfirm, width: w = 300, height: h = 150 }) => {
+    contentComponent.value = component;
+    contentProps.value = props;
+    confirmCallback = onConfirm || null;
+    width.value = typeof w === 'number' ? `${w}px` : w;
+    height.value = typeof h === 'number' ? `${h}px` : h;
+    visible.value = true;
+  };
+  
+  defineExpose({ show });
+  </script>
+  
+  <style scoped>
+  .popDiv {
     position: fixed;
     top: 0;
     left: 0;
     height: 100%;
     width: 100%;
     background-color: rgba(128, 128, 128, 0.5);
-    /* 背景半透明 */
     z-index: 19;
-}
-
-/* 彈窗樣式 */
-.popBox {
+  }
+  
+  .popBox {
     background-color: white;
     position: fixed;
     top: 50%;
-    /* 水平和垂直居中 */
     left: 50%;
     transform: translate(-50%, -50%);
     border: 5px solid var(--lightGray);
     border-radius: 4px;
     z-index: 20;
     opacity: 1;
-}
-
-/* 過渡動畫 */
-.expand-fade-enter-active,
-.expand-fade-leave-active {
+  }
+  
+  .expand-fade-enter-active,
+  .expand-fade-leave-active {
     transition: transform 0.3s ease, opacity 0.3s ease;
-}
-
-/* 進入時的狀態 */
-.expand-fade-enter-from {
+  }
+  
+  .expand-fade-enter-from {
     transform: translate(-50%, -50%) scaleY(0);
-    /* 初始垂直壓縮 */
     opacity: 0;
-}
-
-/* 進入完成狀態 */
-.expand-fade-enter-to {
+  }
+  
+  .expand-fade-enter-to {
     transform: translate(-50%, -50%) scaleY(1);
-    /* 展開 */
     opacity: 1;
-}
-
-
-.popBoxMsg {
-    height: calc(100% - 50px);
-    font-size: 22px;
-}
-
-.popBoxBtn {
-    height: 50px;
-}
-
-.confirmBtnDiv {
-    width: 50%;
-}
-
-.cancelBtnDiv {
-    width: 50%;
-}
-
-.decideBtn {
-    height: 40px;
-    width: 80px;
-    border-radius: 4px;
-    font-weight: 700;
-    cursor: pointer;
-}
-
-.confirmBtn {
-    color: white;
-    background-color: var(--gray);
-}
-
-.confirmBtn:hover,.confirmBtn:active {
-    background-color: var(--grayClick);
-}
-
-.cancelBtn {
-    background-color: var(--lightGray);
-}
-
-.cancelBtn:hover,.cancelBtn:active {
-    background-color: var(--lightGrayClick);
-}
-</style>
+  }
+  </style>
+  

@@ -12,30 +12,32 @@
         <div class="slider-container">
             <div class="slider" :style="{ transform: isLogin ? 'translateX(0)' : 'translateX(-50%)' }">
                 <!-- 登入內容 -->
-                <div class="slide-content">
+                <form class="slide-content" @submit.prevent="handleLogin">
                     <p class="title">Account</p>
-                    <input type="email" v-model="accText" />
+                    <input type="email" v-model="accText" autocomplete="username" required />
                     <p class="title">Password</p>
-                    <input type="password" v-model="pwdText" />
+                    <input type="password" v-model="pwdText" autocomplete="current-password" required />
                     <div id="accBlockBtn" class="flexWrap">
-                        <p id="signInBtn">SIGN IN</p>
+                        <button type="submit" id="signInBtn">SIGN IN</button>
                         <p id="forgotPwd">forgot password?</p>
                     </div>
-                </div>
+                </form>
+
                 <!-- 註冊內容 -->
-                <div class="slide-content">
+                <form class="slide-content" @submit.prevent="handleRegister">
                     <p class="title">Account</p>
-                    <input type="email" v-model="regAccText" />
+                    <input type="email" v-model="regAccText" autocomplete="username" required />
                     <p class="title">Password</p>
-                    <input type="password" v-model="regPwdText" />
+                    <input type="password" v-model="regPwdText" autocomplete="new-password" required />
                     <p class="title">Confirm Password</p>
-                    <input type="password" v-model="regPwdAgainText" />
+                    <input type="password" v-model="regPwdAgainText" autocomplete="new-password" required />
                     <p class="title">E-mail</p>
-                    <input type="email" v-model="regMailText" />
+                    <input type="email" v-model="regMailText" autocomplete="email" required />
                     <div id="regBlockBtn" class="flexAllCenter">
-                        <p id="signUpBtn">SING UP</p>
+                        <button type="submit" id="signUpBtn">SIGN UP</button>
                     </div>
-                </div>
+                </form>
+
             </div>
         </div>
     </div>
@@ -60,6 +62,33 @@ const changeToLogin = () => {
 const changeToRegister = () => {
     isLogin.value = false;
 };
+
+const handleLogin = () => {
+    if (!accText.value || !pwdText.value) {
+        alert("請輸入帳號和密碼");
+        return;
+    }
+    console.log("登入資料", {
+        account: accText.value,
+        password: pwdText.value,
+    });
+    // TODO: 呼叫 API 進行登入
+};
+
+const handleRegister = () => {
+    if (regPwdText.value !== regPwdAgainText.value) {
+        alert("密碼與確認密碼不一致");
+        return;
+    }
+
+    console.log("註冊資料", {
+        account: regAccText.value,
+        email: regMailText.value,
+        password: regPwdText.value,
+    });
+    // TODO: 呼叫 API 進行註冊
+};
+
 </script>
 
 <style scoped>
@@ -70,6 +99,7 @@ const changeToRegister = () => {
     /* overflow-y: scroll; */
     /* margin: 5px; */
     box-sizing: border-box;
+    overflow-y: auto;
 }
 
 .title {
@@ -144,7 +174,8 @@ input:focus {
     margin-bottom: 50px;
 }
 
-#signInBtn,#signUpBtn {
+#signInBtn,
+#signUpBtn {
     background-color: var(--gray);
     box-sizing: border-box;
     padding: 2px 5px;
@@ -154,7 +185,10 @@ input:focus {
     color: white;
 }
 
-#signInBtn:hover,#signUpBtn:hover,#signInBtn:active,#signUpBtn:active {
+#signInBtn:hover,
+#signUpBtn:hover,
+#signInBtn:active,
+#signUpBtn:active {
     background-color: var(--grayClick);
 }
 
@@ -164,12 +198,13 @@ input:focus {
     color: var(--gray);
 }
 
-#forgotPwd:hover,#forgotPwd:active {
+#forgotPwd:hover,
+#forgotPwd:active {
     color: var(--grayClick);
 }
 
 /* 註冊 */
-#regBlockBtn{
+#regBlockBtn {
     margin-top: 30px;
     margin-bottom: 50px;
 }
