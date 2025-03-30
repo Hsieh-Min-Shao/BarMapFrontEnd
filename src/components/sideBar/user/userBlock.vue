@@ -14,7 +14,7 @@
             <div class="userCenterBlock flexWrap flexVerticalCenter">
                 <div class="userImg"><img src="/pic/userCenter/user.png" alt=""></div>
                 <div class="userName ">使用者名稱</div>
-                <div class="loginBtn userBtn flexAllCenter" @click="toggleHeight">
+                <div class=" userBtn flexAllCenter" @click="toggleHeight">
                     <Icon icon="material-symbols:bookmark-outline" class="iconBtn" />
                 </div>
                 <div class="loginBtn userBtn flexAllCenter">
@@ -138,12 +138,18 @@ const onSearchResult = (searchResultInfo) => {
 }
 
 .userBtn {
+    height: 30px;
+    border: 1.5px solid var(--lightGrayClick);
+    padding: 2px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    cursor: pointer;
     width: 30px;
 }
-
-.userBtn:hover .iconBtn {
-    transform: scale(1.2);
-
+.userBtn:active,
+.userBtn:hover  {
+    background-color: var(--lightGray);
+    border: none
 }
 
 .iconBtn {

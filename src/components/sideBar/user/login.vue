@@ -183,6 +183,7 @@ input:focus {
     font-size: 18px;
     cursor: pointer;
     color: white;
+    border: none;
 }
 
 #signInBtn:hover,

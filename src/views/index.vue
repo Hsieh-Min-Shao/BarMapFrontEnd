@@ -20,7 +20,7 @@ import { ref, reactive } from 'vue'
 import Map from "../components/map/map.vue"
 import SearchResults from "../components/sideBar/searchResults.vue";
 import SiderBar from "../components/sideBar/sideBar.vue"
-import userBlock from "../components/sideBar/userBlock.vue"
+import userBlock from "../components/sideBar/user/userBlock.vue"
 import BarInfo from '../components/barInfo/barInfo.vue';
 
 const currentSearchInfo = ref({});
