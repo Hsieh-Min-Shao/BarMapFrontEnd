@@ -14,7 +14,7 @@
                 <!-- 登入內容 -->
                 <form class="slide-content" @submit.prevent="handleLogin">
                     <p class="title">Account</p>
-                    <input type="email" v-model="accText" autocomplete="username" required />
+                    <input type="text" v-model="accText" autocomplete="username" required />
                     <p class="title">Password</p>
                     <input type="password" v-model="pwdText" autocomplete="current-password" required />
                     <div id="accBlockBtn" class="flexWrap">
@@ -26,7 +26,7 @@
                 <!-- 註冊內容 -->
                 <form class="slide-content" @submit.prevent="handleRegister">
                     <p class="title">Account</p>
-                    <input type="email" v-model="regAccText" autocomplete="username" required />
+                    <input type="text" v-model="regAccText" autocomplete="username" required />
                     <p class="title">Password</p>
                     <input type="password" v-model="regPwdText" autocomplete="new-password" required />
                     <p class="title">Confirm Password</p>
@@ -77,7 +77,7 @@ const handleLogin = () => {
 
 const handleRegister = () => {
     if (regPwdText.value !== regPwdAgainText.value) {
-        alert("密碼與確認密碼不一致");
+        window.notify("密碼與確認密碼不一致", "error");
         return;
     }
 
@@ -86,6 +86,7 @@ const handleRegister = () => {
         email: regMailText.value,
         password: regPwdText.value,
     });
+    window.notify("註冊成功", "success");
     // TODO: 呼叫 API 進行註冊
 };
 

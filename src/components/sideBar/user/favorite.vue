@@ -1,8 +1,9 @@
 <template>
     <div class="favoriteWrapper">
         <div v-for="(favorite, index) in favoriteList" :key="favorite.barId"
-            class="favoriteBar flexWrap flexVerticalCenter" :class="{ first: index === 0 }" @click="clickFavorite(favorite.barId)">
-            <div class="favoriteBarName" >{{ favorite.barName }}</div>
+            class="favoriteBar flexWrap flexVerticalCenter" :class="{ first: index === 0 }"
+            @click="clickFavorite(favorite.barId)">
+            <div class="favoriteBarName">{{ favorite.barName }}</div>
             <div class="flexAllCenter copyIconBlock" @click.stop @click="copyLink(favorite.barId)">
                 <Icon icon="mdi:link-variant" class="copyIcon" />
             </div>
@@ -36,7 +37,7 @@ const favoriteList = reactive([
 ]);
 
 const emits = defineEmits(['searchResult']);
-const clickFavorite = (id) => {    
+const clickFavorite = (id) => {
     const searchResultInfo = {
         barId: id,
     };
@@ -71,6 +72,18 @@ const removeFavorite = (id) => {
     flex: 1;
     overflow-y: auto;
     height: calc(100% - 40px);
+    /* 隱藏 scrollbar */
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE 10+ */
+    -webkit-overflow-scrolling: touch;
+    /* iOS Safari */
+}
+
+.favoriteWrapper::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari, Edge */
 }
 
 .favoriteBar {
@@ -87,7 +100,8 @@ const removeFavorite = (id) => {
     font-size: 16px;
     width: calc(100% - 70px);
 }
-.favoriteBar:hover  {
+
+.favoriteBar:hover {
     background-color: var(--lightGray);
     transition: color 0.3s ease;
     cursor: pointer;

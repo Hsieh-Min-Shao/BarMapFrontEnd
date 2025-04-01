@@ -17,7 +17,7 @@
                 <div class=" userBtn flexAllCenter" @click="toggleHeight">
                     <Icon icon="material-symbols:bookmark-outline" class="iconBtn" />
                 </div>
-                <div class="loginBtn userBtn flexAllCenter">
+                <div class="loginBtn userBtn flexAllCenter" @click="editUserInfo">
                     <Icon icon="material-symbols:settings-outline" class="iconBtn" />
                 </div>
             </div>
@@ -29,11 +29,13 @@
 import { ref } from 'vue'
 import login from "./login.vue"
 import favorite from './favorite.vue';
+import userCenter from './userCenter.vue';
 import { Icon } from '@iconify/vue';
 
 
 // 判斷是否登入
 const isLogin = ref(true);
+// const isLogin = ref(false);
 
 const changeHeight = ref(false);
 
@@ -41,6 +43,23 @@ const changeHeight = ref(false);
 const toggleHeight = () => {
     changeHeight.value = !changeHeight.value;
 
+};
+
+const editUserInfo = () => {
+    // 編輯使用者資訊的邏輯
+    window.showPop({
+        component: userCenter,
+        props: {
+            userId: userData.userId,
+        },
+        width: 500,
+        height: "70%",
+        onConfirm: () => {
+            console.log('✅ 檢舉留言 ID:', commemtId);
+            // 呼叫 API 可放這裡
+            window.notify('已檢舉留言', 'success');
+        }
+    });
 };
 
 const userData = ref({
@@ -52,7 +71,7 @@ const userData = ref({
 const emit = defineEmits(['searchResult']);
 
 const onSearchResult = (searchResultInfo) => {
-  emit('searchResult', searchResultInfo);  
+    emit('searchResult', searchResultInfo);
 };
 
 </script>
@@ -146,8 +165,9 @@ const onSearchResult = (searchResultInfo) => {
     cursor: pointer;
     width: 30px;
 }
+
 .userBtn:active,
-.userBtn:hover  {
+.userBtn:hover {
     background-color: var(--lightGray);
     border: none
 }
