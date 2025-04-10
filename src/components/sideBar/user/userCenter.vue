@@ -77,7 +77,9 @@ isEmailVerify.value = userData.isEmailVerify;
 
 const changeName = () => {
     isChangeName.value = !isChangeName.value;
-
+    if (!isChangeName.value) {
+        notify('修改成功', 'success');
+    }
 }
 
 const changePwd = () => {
